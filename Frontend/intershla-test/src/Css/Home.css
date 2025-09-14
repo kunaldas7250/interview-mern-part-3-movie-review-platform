@@ -1,0 +1,39 @@
+.HomeParent {
+  display: flex;
+  flex-direction: column; /* Stack image on top, buttons below */
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh; /* Full screen height */
+  background-color: #f9f9f9;
+  text-align: center;
+  padding: 20px;
+}
+
+.HomeImg img {
+  width: 1500px;       /* adjust as per your need */
+  max-width: 90%;     /* responsive */
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  margin-bottom: 30px; /* space between image and buttons */
+}
+
+.LoginRegister {
+  display: flex;
+  gap: 20px;  /* space between buttons */
+}
+
+.LoginRegister button {
+  padding: 12px 24px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #007bff;
+  color: white;
+  transition: 0.3s ease;
+}
+
+.LoginRegister button:hover {
+  background: #0056b3;
+}
