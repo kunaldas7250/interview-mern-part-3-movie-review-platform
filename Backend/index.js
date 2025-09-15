@@ -39,6 +39,7 @@ app.use(
     origin: "http://localhost:5173", // ✅ remove trailing slash
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
+     //allowedHeaders: ["Content-Type", "Authorization"]
   })
 );
 // res.cookie("token", token, {

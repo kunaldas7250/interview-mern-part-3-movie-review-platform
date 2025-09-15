@@ -1,0 +1,93 @@
+/* Full-width Bottom Navbar */
+.NavHome {
+  position: fixed;
+  bottom: 650px;
+  left: 0;
+  width: 100%;
+  background: #2c3e50;
+  color: white;
+  font-family: "Arial", sans-serif;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  z-index: 1000; /* stay on top */
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Left text */
+.Text p {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* Filtering Menu (center) */
+.Filtering ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+}
+
+.Filtering li {
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.Filtering li:hover {
+  color: #f39c12;
+}
+
+/* Profile + Logout (right) */
+.ProfileSection {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  position: relative;
+  right: 70px;
+}
+
+.Profile button,
+.Logout button {
+  background: #3498db;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.Profile button:hover,
+.Logout button:hover {
+  background: #2980b9;
+}
+
+/* Dropdown inside profile */
+.ProfileDropdown {
+  margin-top: 10px;
+  background: white;
+  color: #333;
+  padding: 12px;
+  border-radius: 8px;
+  position: absolute;
+  right: 70px;
+  /* bottom: 10px;  */
+  min-width: 200px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  animation: dropdownFade 0.3s ease;
+}
+
+@keyframes dropdownFade {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

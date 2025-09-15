@@ -26,7 +26,7 @@ const Login = () => {
     console.log("Login Success:", response.data);
 
     // Redirect to Movie page
-    navigate("/Movie");
+    navigate("/NavHome");
   } catch (error) {
     console.error("Something went wrong:", error.response?.data || error.message);
   }

@@ -114,7 +114,42 @@ app.get("/movies/:id", async (req, res) => {
   }
 });
 
-app.post("/movies", upload.single("fileImage"), async (req, res) => {
+// app.post("/movies", upload.single("fileImage"), async (req, res) => {
+//   try {
+//     const {
+//       Title,
+//       Genre,
+//       ReleaseYear,
+//       Director,
+//       Cast,
+//       Synopsis,
+//       AverageRataing,
+//     } = req.body;
+//     const MoviePoster = req.file ? req.file.filename : null;
+
+//     const pool = await connection();
+//     await pool
+//       .request()
+//       .input("Title", sql.VarChar, Title)
+//       .input("Genre", sql.VarChar, Genre)
+//       .input("ReleaseYear", sql.Int, ReleaseYear)
+//       .input("Director", sql.VarChar, Director)
+//       .input("Cast", sql.VarChar, Cast)
+//       .input("Synopsis", sql.VarChar, Synopsis)
+//       .input("PosterURL", sql.VarChar, MoviePoster)
+//       .input("AverageRataing", sql.Int, AverageRataing).query(`
+//         INSERT INTO Movies (Title, Genre, ReleaseYear, Director, Cast, Synopsis, PosterURL, AverageRataing) 
+//         VALUES (@Title,@Genre,@ReleaseYear,@Director,@Cast,@Synopsis,@PosterURL,@AverageRataing)
+//       `);
+
+//     res.status(201).send("✅ Movie added successfully");
+//   } catch (error) {
+//     console.error("❌ Error adding movie:", error);
+//     res.status(500).send("Internal server error");
+//   }
+// });
+// backend
+app.post("/movies", upload.single("MoviePoster"), async (req, res) => {
   try {
     const {
       Title,
@@ -123,9 +158,10 @@ app.post("/movies", upload.single("fileImage"), async (req, res) => {
       Director,
       Cast,
       Synopsis,
-      AverageRataing,
+      AverageRataing, // fixed spelling
     } = req.body;
-    const MoviePoster = req.file ? req.file.filename : null;
+
+    const PosterURL = req.file ? req.file.filename : null;
 
     const pool = await connection();
     await pool
@@ -136,8 +172,9 @@ app.post("/movies", upload.single("fileImage"), async (req, res) => {
       .input("Director", sql.VarChar, Director)
       .input("Cast", sql.VarChar, Cast)
       .input("Synopsis", sql.VarChar, Synopsis)
-      .input("PosterURL", sql.VarChar, MoviePoster)
-      .input("AverageRataing", sql.Int, AverageRataing).query(`
+      .input("PosterURL", sql.VarChar, PosterURL)
+      .input("AverageRataing", sql.Int, AverageRataing)
+      .query(`
         INSERT INTO Movies (Title, Genre, ReleaseYear, Director, Cast, Synopsis, PosterURL, AverageRataing) 
         VALUES (@Title,@Genre,@ReleaseYear,@Director,@Cast,@Synopsis,@PosterURL,@AverageRataing)
       `);
@@ -148,22 +185,51 @@ app.post("/movies", upload.single("fileImage"), async (req, res) => {
     res.status(500).send("Internal server error");
   }
 });
+
+// app.get("/movies/:id/reviews", async (req, res) => {
+//   try {
+//     const { MovieId } = req.params;
+//     if (!MovieId) {
+//       res.status(403).send("sorry");
+//     }
+//     const pool = await connection();
+//     await pool.request().input("MovieId", sql.Int, MovieId)
+//       .query(`select * from dbo.Movies as m 
+// join dbo.Reviews as r
+// on m.MovieId =r.MovieID
+// where M.MovieId=@MovieId`);
+//   } catch (error) {
+//     console.error(`something went wrong ${error.message}`);
+//   }
+// });
 app.get("/movies/:id/reviews", async (req, res) => {
   try {
-    const { MovieId } = req.params;
-    if (!MovieId) {
-      res.status(403).send("sorry");
+    const { id } = req.params; // ✅ use 'id'
+    if (!id) {
+      return res.status(400).send("MovieId is required"); // better 400 than 403
     }
+
     const pool = await connection();
-    await pool.request().input("MovieId", sql.Int, MovieId)
-      .query(`select * from dbo.Movies as m 
-join dbo.Reviews as r
-on m.MovieId =r.MovieID
-where M.MovieId=@MovieId`);
+    const result = await pool.request()
+      .input("MovieId", sql.Int, id)
+      .query(`
+        SELECT * 
+        FROM dbo.Movies AS m
+        JOIN dbo.Reviews AS r ON m.MovieId = r.MovieID
+        WHERE m.MovieId = @MovieId
+      `);
+
+    if (result.recordset.length === 0) {
+      return res.status(404).send("No reviews found for this movie");
+    }
+
+    res.status(200).json(result.recordset); // ✅ send back rows
   } catch (error) {
-    console.error(`something went wrong ${error}`);
+    console.error("❌ something went wrong:", error.message);
+    res.status(500).send("Internal Server Error");
   }
 });
+
 app.post("/movies/:id/reviews", async (req, res) => {
   try {
     const { UserID, MovieID, Rating, ReviewText } = req.body;
@@ -180,7 +246,7 @@ app.post("/movies/:id/reviews", async (req, res) => {
       .query(`INSERT INTO Reviews (UserID, MovieID, Rating, ReviewText)
 VALUES(@UserID,@MovieID,@Rating,@ReviewText)
 `);
-    res.status(200).send(result.recordset[0]);
+    res.status(200).send(result.recordset);
   } catch (error) {
     console.error(`something went wrong ${error}`);
   }

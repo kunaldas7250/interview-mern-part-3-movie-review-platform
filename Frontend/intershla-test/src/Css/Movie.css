@@ -1,87 +1,55 @@
-/* Parent container */
+/* Parent container full width */
 .MoviesParent {
-  width: 1200px;
+  width: 100%;
   margin: 0 auto;
-  padding: 20px 0;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 40px;
   font-family: 'Arial', sans-serif;
+  position: relative;
+  top: 50px;
 }
 
-/* Trending Movies Section */
-.trending-Movie {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.Get-all-trending-movie h2 {
+/* Section Titles */
+.Get-all-trending-movie h2,
+.Get-all-movies h2 {
   font-size: 22px;
   margin-bottom: 10px;
-  color: "white";
+  color: white;
 }
 
-/* Horizontal scroll container */
-.Trending-Scroll {
+/* Common movie grid (used for both Trending + All Movies) */
+.Trending-Scroll,
+.GetAllMovies {
   display: flex;
-  gap: 15px;
-  overflow-x: auto;
-  padding-bottom: 10px;
-  scrollbar-width: thin;
-  scrollbar-color: #ff4500 #f1f1f1;
+  flex-wrap: wrap;
+  gap: 20px;
+  width: 100%;
 }
 
-.Trending-Scroll::-webkit-scrollbar {
-  height: 8px;
-}
-
-.Trending-Scroll::-webkit-scrollbar-thumb {
-  background-color: #ff4500;
-  border-radius: 4px;
-}
-
-.Trending-Card {
-  min-width: 200px; /* width of each card */
+/* Common card design */
+.Trending-Card,
+.Movie-Card {
+  flex: 1 1 calc(25% - 20px); /* 4 per row */
   background: #f9f9f9;
   padding: 15px 20px;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  flex-shrink: 0; /* prevents shrinking */
   transition: all 0.3s ease;
 }
 
-.Trending-Card:hover {
+.Trending-Card:hover,
+.Movie-Card:hover {
   box-shadow: 0 8px 12px rgba(0,0,0,0.2);
   transform: scale(1.05);
-}
-
-/* All Movies Section */
-.GetAllMovies {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.Movie-Card {
-  display: flex;
-  flex-direction: column;
-  background: #fff;
-  padding: 15px 20px;
-  border-radius: 10px;
-  box-shadow: 0 3px 5px rgba(0,0,0,0.1);
-  transition: all 0.3s ease;
-}
-
-.Movie-Card:hover {
-  box-shadow: 0 6px 10px rgba(0,0,0,0.2);
-  transform: scale(1.02);
 }
 
 /* Movie details inside the card */
 .Movie-Details p,
 .Movie-More-Details p,
-.Trending-Card p {
+.Trending-Card p,
+.Movie-Card p {
   margin: 5px 0;
   font-size: 14px;
   color: #333;
@@ -89,6 +57,7 @@
 
 .Movie-Details strong,
 .Movie-More-Details strong,
-.Trending-Card strong {
+.Trending-Card strong,
+.Movie-Card strong {
   color: #000;
 }

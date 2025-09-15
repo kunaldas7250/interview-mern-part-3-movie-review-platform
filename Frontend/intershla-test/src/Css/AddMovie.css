@@ -1,0 +1,54 @@
+.Addmovie {
+  width: 100%;
+  max-width: 600px;        /* keep form nicely centered */
+  margin: 30px auto;
+  padding: 25px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  font-family: "Segoe UI", sans-serif;
+}
+
+.Addmovie form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.Addmovie label {
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: #333;
+}
+
+.Addmovie input[type="text"],
+.Addmovie input[type="number"],
+.Addmovie input[type="file"] {
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border 0.3s;
+  width: 100%;
+}
+
+.Addmovie input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.Addmovie button {
+  padding: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  background: #007bff;
+  border: none;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.Addmovie button:hover {
+  background: #0056b3;
+}
